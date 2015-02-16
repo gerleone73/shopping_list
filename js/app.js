@@ -26,8 +26,8 @@ $(document).ready(function(){
 	 });
 	// 
 
-	 $("#gotit").click(function() {
-       $('.info').remove();
+	 $("#gotit").dblclick(function() {
+       $('.item').remove();
         newlist();
 	
     });
@@ -41,6 +41,7 @@ $(document).ready(function(){
 		console.log(doneCount);
 	 }
 
+
 	// shopping();
 
 newlist();
@@ -51,6 +52,8 @@ newlist();
 	updateCount(); 
 	
 	//shopping();
+
+
 
 
 	setFocus();
@@ -69,6 +72,7 @@ newlist();
 		};
 		
 	});
+
 
 
 	/*--- Check off the items ---*/
@@ -90,6 +94,7 @@ newlist();
 			doCount++;
 			doneCount--;
 			updateCount();
+
 		} else {
 			
 			console.debug($(this));
@@ -113,16 +118,29 @@ newlist();
 	function addItem(newItem) {
 		doCount++;
 		updateCount();
-		$('<li class="listitem"><span class="item new">' + newItem + '</span></li>').prependTo('#list');//BEFORE APPEND CAME $("#list").hide()....slideDown('slow');
+		$('<li class="listitem"><span class="item">' + newItem + '</span></li>').prependTo('#list');//BEFORE APPEND CAME $("#list").hide()....slideDown('slow');
 		console.log("You have now added " + newItem); // note this was simply item!!
 		setFocus();
 	}
 
-	$(".item").hover(function() {
+/*	$(".item").hover(function() {
     $(this).addClass("hover");
 }, function() {
     $(this).removeClass("hover");
 });
+*/
+
+//	if ($('span').hasClass('item') || $('span').hasClass('newItem') ) {
+ /*     
+$(".item").hover(function() {
+      $(this).addClass("hover");
+}, function() {
+    $(this).removeClass("hover");
+});
+//}*/
+
+
+
 
 	/*--- Clear and Set focus to the inputbox ---*/
 	function setFocus() {
@@ -134,6 +152,10 @@ newlist();
 	function updateCount() {
 		$('#do').text(doCount);
 		$('#done').text(doneCount);
+		if(doCount == 17){
+	$('#wrapper').css('height', '1500');
+  
+}
 	}
 
  //shopping
