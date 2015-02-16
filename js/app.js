@@ -10,10 +10,10 @@ $(document).ready(function(){
 //	var doneCount = 0;
 	//updateCount();
 
-	var doCount = 4;
+/*	var doCount = 4;
 	var doneCount = 0;
 	updateCount();
-
+*/
 
 	//$("#clip").on('hover','#clip',point); 
 
@@ -33,8 +33,8 @@ $(document).ready(function(){
     });
 
 	 function newlist(){
-	 	var doCount = 0;
-		var doneCount = 0;
+	 	doCount = 0;
+		 doneCount = 0;
 		updateCount();
 
 		console.log(doCount);
@@ -46,7 +46,9 @@ $(document).ready(function(){
 newlist();
  //function shopping(){
  
-	 
+	var doCount = 4;
+	var doneCount = 0;
+	updateCount(); 
 	
 	//shopping();
 
