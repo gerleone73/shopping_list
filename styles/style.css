@@ -2,11 +2,11 @@
 
 	Project Name: Shopping List
 
-	
+
 ----------------------------------------------------------------------------------*/
 
 /*---------------------------------------------------------------------------------
-   http://meyerweb.com/eric/tools/css/reset/ 
+   http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 ---------------------------------------------------------------------------------*/
@@ -20,8 +20,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
@@ -32,7 +32,7 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
@@ -78,7 +78,7 @@ table {
 html {
 	width: 100%;
 	height: 100%;
-	overflow: hidden;
+
 }
 
 body {
@@ -88,12 +88,28 @@ body {
 	margin: 0 auto;
 	font-family: 'Annie Use Your Telescope', cursive;
 	background-image: url(../images/corkboard.jpg);
+
+
 }
 #wrapper {
+	/*
+	Trevor Nowalk - 2015-02-16
+	The reason that the background/height isn't scaling well is that the section's
+	are absolutely positioned.  When you absolutely position an element, it takes
+	it out of the normal flow of the DOM, meaning the #wrapper doesn't know how tall
+	the section is and can't grow with it.
+	*/
 	position: relative;
-	width: 600px;
+	width:600px;
 	max-width:95%;
-	height: 90%;
+	/*
+	Trevor Nowalk - 2015-02-16
+	Now that we're relying on the height of the inner .right to grow with the
+	content, we don't need to set the height of the wrapper as it will always
+	be just big enough to contain the inner content.
+	*/
+	/*height: 95%;*/
+	/*min-height: 95%;*/
 	margin: 2em auto;
 	font-family: 'Annie Use Your Telescope', cursive;
 	background-image: url(../images/yellow_paper.jpg);
@@ -101,27 +117,77 @@ body {
 
 
 section {
-	position: absolute;
-	height: 100%;
+	/*
+	Trevor Nowalk - 2015-02-16
+	As mentioned above, the absolute positioning pulls the sections out of the
+	normal flow of the DOM and it's parent (wrapper) doesn't know how tall to be
+	so it cannot grow as the content is added
+	*/
+	/*position: absolute;*/
+	position: relative;
 }
 
 .left {
 	width: 10%;
-	top: 0;
-	left: 0;
+	/*
+	Trevor Nowalk - 2015-02-16
+	Because we're not positioning this absolutely, we don't need the top/left
+	properties.  Instead, we're going to use the float property to float this to
+	the left
+	*/
+	/*top: 0;*/
+	/*left: 0;*/
+	float: left;
 	/*background-image: url(../images/corkboard.jpg);*/
 	font-weight: 400;
-	border-right: 2px solid red;
+	/*
+	Trevor Nowalk - 2015-02-16
+	Another silly side effect of floats and complicated positioning is that the
+	.left doesn't grow to be 100% height of #wrapper which won't bring your border
+	down all the way.  We can move this to the .right which grows as the content
+	grows
+	*/
+	/*border-right: 2px solid red;*/
 }
 
 .right {
 	width: 90%;
-	top: 0;
-	right: 0;
+	/*
+	Trevor Nowalk - 2015-02-16
+	Because we're not positioning this absolutely, we don't need the top/left
+	properties.  Instead, we're going to use the float property to float this to
+	the right
+	*/
+	/*top: 0;*/
+	/*right: 0;*/
+	float: right;
 	font-weight: 300;
 	/*background-image: url(../images/yellow_paper.jpg);*/
 	color:navy;
+	/*
+	Trevor Nowalk - 2015-02-16
+	Moving the border over from .left.  Also adding a padding to the bottom to
+	push the bottom of .right just a bit away from the bottom of the content to
+	give us a little space to work with.
+	*/
+	border-left: 2px solid red;
+	padding-bottom: 20px;
 }
+
+/*
+Trevor Nowalk - 2015-02-16
+Creating a new class that will clear the floated elements
+*/
+.clear {
+	clear: both;
+}
+
+.right:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
 #clip{
 	background-image: url(../images/paperclip.png);
 	background-repeat: no-repeat;
@@ -140,7 +206,7 @@ section {
 .header, div.count-container, footer {
 	position: relative;
 	width: 30%;
-	
+
 	text-align: center;
 	float:left;
 }
@@ -152,15 +218,32 @@ header {
 
 
 
+/*
+Trevor Nowalk - 2015-02-16
+Be very careful with rules like this.  This is what I call a "greedy selector" as
+it will match ALL h1's in the DOM.  In your project, you only have a single h1 but
+if you're working on a bigger project that might have multiple h1's then a rule
+like this will style all of them which might not be the exepcted result.  Generally
+you'll want to use some sort of class or id to create your rules unless you are
+creating something generic enough to apply to all instances of the element
+*/
 h1 {
 	position: relative;
 	top: 0.1em;
-	width: 60%;
+	/*
+	Trevor Nowalk - 2015-02-16
+	Don't need the width now that .count-container is floated properly to the right
+  */
+	/*width: 60%;*/
 	font-family: 'Annie Use Your Telescope', cursive;
 	font-size: 2.5em;
 	text-align: left;
 	padding-left: .5em;
-	padding-right: 2em;
+	/*
+	Trevor Nowalk - 2015-02-16
+	Don't need the padding right any more now that we're floating the count properly
+	*/
+	/*padding-right: 2em;*/
 	color:navy;
 	font-weight: 300;
 	float:left;
@@ -169,9 +252,19 @@ h1 {
 }
 
 .count-container {
- width: 40%;
- float:left;
- text-align: right;	
+ /*
+ Trevor Nowalk - 2015-02-16
+ Chaning the positioning of .right to relative affected the way the float is
+ rendered, need to change this to float: right and now that we're floated right
+ we don't need the width.  Now that the element is floated properly, the
+ positioning needs to be adjusted using margin-right (to push it away from
+ the right side of #wrapper)
+ */
+ /*width: 40%;*/
+ float: right;
+ /*float:left;*/
+ margin-right: 4.15em;
+ text-align: right;
 }
 
 .count-container li.count{
@@ -197,34 +290,42 @@ h1 {
 
 .point{
 	cursor: pointer;
-	
-}
 
+}
+/*
 .hover{
 	color: #11a8ab!important;
 	cursor: pointer;
 }
 
+*/
+
 /*Input Text Box*/
 .textBox {
-  padding-left: .5em; 
-  width: 100%; 
-  margin-top: -.25em;
-  
-  border-style: none; 
-  font-size: 1.5em;
+  padding-left: 1em;
+  width: 100%;
+  margin-top: -.45em;
+  margin-bottom: -.5em;
+ border-style: none;
+  font-size: 2em;
+  vertical-align: bottom;
   color: navy;
-  background-image:url(../images/yellow_paper.jpg);
+  background-color: transparent;
 
 }
 
 input {
 font-family: 'Annie Use Your Telescope', cursive;
 	font-weight: 400;
+	font-size: 2em;
 }
 
 input:focus {
 	outline: none;
+}
+
+#gotit{
+	text-transform: uppercase;
 }
 
 /*List Styles*/
@@ -232,8 +333,15 @@ input:focus {
 	position: relative;
 	list-style-type: none;
 	width: 100%;
-	height: 90%;
+	/*
+	Trevor Nowalk - 2015-02-16
+	Since the margin-top was removed from the .item rule, the first list item
+	doesn't line up in the right spot.  We make up for that by positioning the
+	ul correctly with a margin-top which pushes the ul away from the input
+	*/
+	margin-top: 1em;
 	color:navy;
+
 }
 
 #list li {
@@ -241,7 +349,12 @@ input:focus {
 	/*background-color: #3498db;*/
 	width: 100%;
 	height: 2.75em;
-	
+	/*
+	Trevor Nowalk - 2015-02-16
+	Adding the padding-top here to make up for the margin-top that was removed from
+	the .item rule
+	*/
+	padding-top: 1em;
 	color:navy;
 }
 
@@ -255,9 +368,20 @@ input:focus {
 	font-size: 2em;
 	color: #fff;
 	padding-left:0.8em;
-	padding-top: .75em;
-	
+	/*
+	Trevor Nowalk - 2015-02-16
+	The margin-top here is what is throwing off the "height" of the li, which is
+	what causes the "click box" to go half way up the previous li.  If you remove
+	the margin from here and replace it with a padding on the li, you will get the
+	same style and won't have the issue with the click box.
+	*/
+	/*margin-top: 1em;*/
+	cursor: pointer;
 	color:navy;
+}
+
+.item:hover{
+	color: #11a8ab!important;
 }
 
 /*Delete icon using div*/
@@ -275,8 +399,10 @@ input:focus {
 }
 
 .checked {
-	
+
 }
+
+
 
 /*---------------------------------------------------------------------------------
    Media Queries for responsiveness
